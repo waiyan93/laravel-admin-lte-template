@@ -11,7 +11,7 @@
         @auth('admin')
         <li class="nav-item d-flex flex-row align-items-center">
            {{ __('messages.welcome') }} {{ Auth::guard('admin')->user()->name }} :
-            <a class="nav-link" href="javascript:void(0);" role="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <a class="nav-link" href="{{ route('backend.logout') }}" role="button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 {{ __('messages.logout') }}
                 <form id="logout-form" action="{{ route('backend.logout') }}" method="POST" style="display: none;">
                     @csrf

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Auth;
 use App\Http\Controllers\Controller;
 use Auth;
 use App\Http\Requests\Backend\AdminLoginRequest;
+use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
@@ -23,7 +24,9 @@ class AdminLoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect(route('backend.dashboard'));
+            $request->session()->regenerate();
+
+            return redirect()->route('backend.dashboard');
         }
 
         return redirect()
@@ -32,9 +35,13 @@ class AdminLoginController extends Controller
             ->withInput($request->only('email'));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::guard('admin')->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
         return redirect(route('backend.login'));
     }
 }

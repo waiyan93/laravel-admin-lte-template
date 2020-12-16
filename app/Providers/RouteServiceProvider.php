@@ -89,6 +89,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('backend')
             ->middleware('web')
+            ->name('backend.')
             ->namespace($this->namespace . '\Backend')
             ->group(base_path('routes/backend.php'));
     }
